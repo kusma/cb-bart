@@ -8,11 +8,12 @@
 #include "extensions.h"
 
 #include "mumps.h"
-#include "pest.h"
 #include "object.h"
 #include "rtt.h"
 #include "blur.h"
 #include "particles.h"
+
+#include <bass.h>
 
 void error(char *string){
 	MessageBox(NULL,string,NULL,MB_OK);
@@ -371,6 +372,7 @@ void draw_dilldallscene(object* room, object *sphere, object *sphere_copy, float
 #define PARTICLE_COUNT 1024
 int main(){
 	MSG message;
+	HSTREAM stream = 0;
 	object *room;
 	object *sphere;
 	object *sphere_copy;
@@ -395,19 +397,21 @@ int main(){
 		mumps_close();
 		error("kunne ikke bruke fet opengl-extension");
 	}
-	if(!pest_open(mumps_win)){
+	if (!BASS_Init(-1, 44100, 0, 0, 0)) {
 		mumps_close();
 		error("kunne ikke åpne fet lyd");
 	}
-	if(!pest_load("uglespy.ogg",0)){
-		pest_close();
+	stream = BASS_StreamCreateFile(FALSE, "data/uglespy.ogg", 0, 0, BASS_MP3_SETPOS | BASS_STREAM_PRESCAN | 0);
+	if (!stream) {
+		BASS_Free();
 		mumps_close();
 		error("kunne ikke åpne fet lyd 2.0");
 	}
 
 	loading = load_texture("loading.jpg", FALSE);
 	if(loading==-1){
-		pest_close();
+		BASS_StreamFree(stream);
+		BASS_Free();
 		mumps_close();
 		error("kunne ikke åpne fett bilde");
 	}
@@ -421,14 +425,16 @@ int main(){
 
 	room = load_object("cylinder01.kro");
 	if(!room){
-		pest_close();
+		BASS_StreamFree(stream);
+		BASS_Free();
 		mumps_close();
 		error("kunne ikke åpne fett objekt");
 	}
 
 	sphere = load_object("sphere01.kro");
 	if(!sphere){
-		pest_close();
+		BASS_StreamFree(stream);
+		BASS_Free();
 		mumps_close();
 		error("kunne ikke åpne fett objekt");
 	}
@@ -436,37 +442,43 @@ int main(){
 
 	bjork_texture = load_texture("bjork.jpg", FALSE);
 	if(bjork_texture==-1){
-		pest_close();
+		BASS_StreamFree(stream);
+		BASS_Free();
 		mumps_close();
 		error("kunne ikke åpne fett bilde");
 	}
 	yo_plus = load_texture("yo_plus.jpg", FALSE);
 	if(yo_plus==-1){
-		pest_close();
+		BASS_StreamFree(stream);
+		BASS_Free();
 		mumps_close();
 		error("kunne ikke åpne fett bilde");
 	}
 	carlb = load_texture("carlb.jpg", FALSE);
 	if(carlb==-1){
-		pest_close();
+		BASS_StreamFree(stream);
+		BASS_Free();
 		mumps_close();
 		error("kunne ikke åpne fett bilde");
 	}
 	veldig_kule = load_texture("veldig_kule.jpg", FALSE);
 	if(veldig_kule==-1){
-		pest_close();
+		BASS_StreamFree(stream);
+		BASS_Free();
 		mumps_close();
 		error("kunne ikke åpne fett bilde");
 	}
 	greets = load_texture("greets.jpg", FALSE);
 	if(greets==-1){
-		pest_close();
+		BASS_StreamFree(stream);
+		BASS_Free();
 		mumps_close();
 		error("kunne ikke åpne fett bilde");
 	}
 	mothafuckas = load_texture("mothefuckas.jpg", FALSE);
 	if(mothafuckas==-1){
-		pest_close();
+		BASS_StreamFree(stream);
+		BASS_Free();
 		mumps_close();
 		error("kunne ikke åpne fett bilde");
 	}
@@ -477,10 +489,12 @@ int main(){
 
 	glEnable(GL_NORMALIZE);
 	
-	pest_play();
+	BASS_Start();
+	BASS_ChannelPlay(stream, FALSE);
 
-	do{
-		float time = pest_get_pos();
+	do {
+		QWORD pos = BASS_ChannelGetPosition(stream, BASS_POS_BYTE);
+		double time = BASS_ChannelBytes2Seconds(stream, pos);
 
 		glViewport(0,0,mumps_width,mumps_height);
 
@@ -678,7 +692,8 @@ int main(){
 		    if(message.message == WM_QUIT) break;
 		}
 	}while(message.message!=WM_QUIT && !GetAsyncKeyState(VK_ESCAPE));
-	pest_close();
+	BASS_StreamFree(stream);
+	BASS_Free();
 	mumps_close();
 	MessageBox(NULL,"Frigi minnet ditt sjøl, taper","In your face",MB_OK);
 	return 0;
