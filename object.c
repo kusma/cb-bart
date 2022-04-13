@@ -278,7 +278,7 @@ void set_material( material* mat ){
 }
 
 void draw_object( object *obj ){
-	unsigned int mesh, i;
+	unsigned int mesh;
 	if(!obj) return;
 
 	if(obj->recalculate_normals) generate_normals(obj);
@@ -298,25 +298,7 @@ void draw_object( object *obj ){
 	for(mesh=0;mesh<obj->submesh_count;mesh++){
 		/* set material */
 		if(obj->submeshes[mesh].mat) set_material(obj->submeshes[mesh].mat);
-#if 1
 		glDrawElements(GL_TRIANGLES, obj->submeshes[mesh].triangle_count*3, GL_UNSIGNED_INT, obj->submeshes[mesh].triangles);
-#else
-		glBegin(GL_TRIANGLES);
-		for(i=0;i<obj->submeshes[mesh].triangle_count;i++){
-			glNormal3fv(  (float*)&obj->normals[   obj->submeshes[mesh].triangles[ i*3+0 ] ]);
-			glTexCoord3fv((float*)&obj->texcoords[ obj->submeshes[mesh].triangles[ i*3+0 ] ]);
-			glVertex3fv(  (float*)&obj->vertices[  obj->submeshes[mesh].triangles[ i*3+0 ] ]);
-
-			glNormal3fv(  (float*)&obj->normals[   obj->submeshes[mesh].triangles[ i*3+1 ] ]);
-			glTexCoord3fv((float*)&obj->texcoords[ obj->submeshes[mesh].triangles[ i*3+1 ] ]);
-			glVertex3fv(  (float*)&obj->vertices[  obj->submeshes[mesh].triangles[ i*3+1 ] ]);
-
-			glNormal3fv(  (float*)&obj->normals[   obj->submeshes[mesh].triangles[ i*3+2 ] ]);
-			glTexCoord3fv((float*)&obj->texcoords[ obj->submeshes[mesh].triangles[ i*3+2 ] ]);
-			glVertex3fv(  (float*)&obj->vertices[  obj->submeshes[mesh].triangles[ i*3+2 ] ]);
-		}
-		glEnd();
-#endif
 	}
 
 	glPopAttrib();
