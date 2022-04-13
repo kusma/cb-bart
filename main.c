@@ -408,7 +408,9 @@ int main(){
 
 	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 
-	GLFWwindow *win = glfwCreateWindow(WIDTH, HEIGHT, "CARL B!!!!1", NULL, NULL);
+	GLFWwindow *win = glfwCreateWindow(WIDTH, HEIGHT, "CARL B!!!!1",
+	                                   FULLSCREEN ?  glfwGetPrimaryMonitor() : NULL,
+	                                   NULL);
 	if (!win)
 		error("kunne ikke lage bartevindu");
 
@@ -438,6 +440,10 @@ int main(){
 		glfwDestroyWindow(win);
 		error("kunne ikke åpne fett bilde");
 	}
+
+	int width, height;
+	glfwGetFramebufferSize(win, &width, &height);
+	glViewport(0, 0, width, height);
 
 	glClearColor(0,0,0,0);
 	glClear(GL_DEPTH_BUFFER_BIT|GL_COLOR_BUFFER_BIT);
@@ -517,10 +523,6 @@ int main(){
 	while (!glfwWindowShouldClose(win)) {
 		QWORD pos = BASS_ChannelGetPosition(stream, BASS_POS_BYTE);
 		double time = BASS_ChannelBytes2Seconds(stream, pos);
-
-		int width, height;
-		glfwGetFramebufferSize(win, &width, &height);
-		glViewport(0, 0, width, height);
 
 		if(time<25.55f){
 			glClearColor(1,1,1,0);
