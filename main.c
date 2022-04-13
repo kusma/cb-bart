@@ -511,9 +511,9 @@ int main(){
 		error("kunne ikke åpne fett bilde");
 	}
 
-	rendertarget = init_rtt(512,256,(float)WIDTH/(float)HEIGHT, false, false);
-	fucking_shit = init_rtt(512,256,(float)WIDTH/(float)HEIGHT, false, true);
-	init_blur(256,256);
+	rendertarget = init_rtt(width, height, (float)WIDTH/(float)HEIGHT, false, false);
+	fucking_shit = init_rtt(width, height, (float)WIDTH/(float)HEIGHT, false, true);
+	init_blur(width / 2, height / 2);
 
 	glEnable(GL_NORMALIZE);
 	
