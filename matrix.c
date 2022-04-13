@@ -2,7 +2,9 @@
 #include "vector.h"
 #include <math.h>
 
+#ifdef _MSC_VER
 #pragma intrinsic( cos, sin )
+#endif
 
 void matrix_identity( matrix m ){
 	m[0 ] = 1; m[1 ] = 0; m[2 ] = 0; m[3 ] = 0;

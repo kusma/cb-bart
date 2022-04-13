@@ -1,0 +1,1 @@
+option('bass-sdk', type : 'string')

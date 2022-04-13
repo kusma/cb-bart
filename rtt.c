@@ -1,10 +1,8 @@
-#define WIN32_LEAN_AND_MEAN
-#include <windows.h>
 #include <stdlib.h>
+#include <string.h>
 
-#include <GL/gl.h>
+#include <glad/gl.h>
 #include <GL/glu.h>
-#include "extensions.h"
 #include "rtt.h"
 
 rtt_target *init_rtt(int width, int height, float aspect, bool wrap, bool mipmap){
@@ -26,7 +24,7 @@ rtt_target *init_rtt(int width, int height, float aspect, bool wrap, bool mipmap
 	if(mipmap){
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP_SGIS, GL_TRUE );
+		glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE );
 	}else{
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);

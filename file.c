@@ -10,26 +10,20 @@ file* file_open( char *filename ){
 
 	file* temp = (file*)malloc( sizeof(file) );
 
-	if( !urarlib_get(&temp->data, &temp->size, filename, ARCHIVE, PASSWORD) ){
-		char buffer[256];
-		FILE *fp;
+	char buffer[256];
+	FILE *fp;
 
-#ifdef _DEBUG
-		printf("file not found in archive %s\n", filename);
-#endif
+	sprintf(buffer,"data/%s", filename);
 
-		sprintf(buffer,"data/%s", filename);
+	fp = fopen(buffer, "rb");
+	if(fp==NULL) return NULL;
 
-		fp = fopen(buffer, "rb");
-		if(fp==NULL) return NULL;
-
-		fseek(fp, 0, SEEK_END);
-		temp->size = ftell(fp);
-		rewind(fp);
-		temp->data = malloc(sizeof(unsigned char)*temp->size);
-		fread( temp->data, sizeof(unsigned char), temp->size, fp );
-		fclose(fp);
-	}
+	fseek(fp, 0, SEEK_END);
+	temp->size = ftell(fp);
+	rewind(fp);
+	temp->data = malloc(sizeof(unsigned char)*temp->size);
+	fread( temp->data, sizeof(unsigned char), temp->size, fp );
+	fclose(fp);
 
 	temp->pos = 0;
 	return temp;
@@ -60,7 +54,7 @@ size_t file_read( void *buffer, size_t size, size_t number, file *file ){
 	return number;
 }
 
-int file_seek( file *file, __int64 offset, int mode ){
+int file_seek( file *file, long offset, int mode ){
 	switch( mode ){
 		case SEEK_SET:
 			file->pos = (unsigned int)offset;

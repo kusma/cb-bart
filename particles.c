@@ -1,12 +1,9 @@
-#include <GL/gl.h>
-#include <GL/glu.h>
-
-#include "extensions.h"
+#include <glad/gl.h>
 
 #include "vector.h"
 #include "matrix.h"
 
-__inline void get_up_right_vectors(vector *up,vector *right){
+static inline void get_up_right_vectors(vector *up,vector *right){
 	float modelview[16];
 	glGetFloatv(GL_MODELVIEW_MATRIX, modelview);
 	*right = vector_make(modelview[0],modelview[4],modelview[8]);
@@ -37,7 +34,7 @@ void draw_particles(vector *particles, unsigned int particle_count, unsigned int
 	glDepthMask(GL_FALSE);
 	glEnable(GL_BLEND);
 
-	glBlendEquationEXT(GL_FUNC_REVERSE_SUBTRACT);
+	glBlendEquation(GL_FUNC_REVERSE_SUBTRACT);
 	glBlendFunc(GL_ONE,GL_ONE);
 
 	glDisable(GL_LIGHTING);

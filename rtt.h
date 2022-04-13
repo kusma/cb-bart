@@ -1,6 +1,8 @@
 #ifndef RTT_H
 #define RTT_H
 
+#include <stdbool.h>
+
 typedef struct{
 	int texture;
 	int width;

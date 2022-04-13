@@ -1,14 +1,11 @@
-#define WIN32_LEAN_AND_MEAN
-#include <windows.h>
-#include <GL/gl.h>
+#include <glad/gl.h>
 #include <GL/glu.h>
 
-#include "extensions.h"
+#include <string.h>
 
 #include "object.h"
 #include "file.h"
 #include "image.h"
-
 
 char *get_dirname(char *filename){
 	char temp[256];
@@ -33,8 +30,8 @@ char *loadstring(file* file){
 int load_texture(char *filename, bool wrap){
 	unsigned int id;
 	unsigned int* pixels;
-	int width;
-	int height;
+	unsigned int width;
+	unsigned int height;
 
 	if(!image_load(filename,&pixels,&width,&height)) return -1;
 
@@ -56,7 +53,7 @@ int load_texture(char *filename, bool wrap){
 
 	/* mipmapping er sweet */
 	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR_MIPMAP_NEAREST);
-	gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGB, width, height, GL_BGRA_EXT, GL_UNSIGNED_BYTE, pixels);
+	gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGB, width, height, GL_BGRA, GL_UNSIGNED_BYTE, pixels);
 
 	glBindTexture(GL_TEXTURE_2D, 0);
 	return id;
@@ -225,7 +222,7 @@ object *copy_object( object *source ){
 	return temp;
 }
 
-__inline void set_param(GLenum mode,color param,GLfloat alpha){
+static inline void set_param(GLenum mode,color param,GLfloat alpha){
 	GLfloat temp[4] = { param.r, param.g, param.b, alpha };
 	glMaterialfv(GL_FRONT_AND_BACK,mode,temp);
 }
@@ -241,7 +238,7 @@ void set_material( material* mat ){
 	glMaterialf(GL_FRONT_AND_BACK,GL_SHININESS,mat->shininess);
 	glDisable(GL_COLOR_MATERIAL);
 
-	glActiveTextureARB(GL_TEXTURE0_ARB);
+	glActiveTexture(GL_TEXTURE0);
 	if(mat->texturemap != -1){
 		glBindTexture(GL_TEXTURE_2D,mat->texturemap);
 		glEnable(GL_TEXTURE_2D);
@@ -250,14 +247,14 @@ void set_material( material* mat ){
 		glDisable(GL_TEXTURE_2D);
 	}
 
-	glActiveTextureARB(GL_TEXTURE1_ARB);
+	glActiveTexture(GL_TEXTURE1);
 	if(mat->environmentmap != -1){
 		glBindTexture(GL_TEXTURE_2D,mat->environmentmap);
 		glTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP);
 		glTexGeni(GL_T, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP);
 		if(mat->texturemap != -1){
-			glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_COMBINE_EXT);
-			glTexEnvi(GL_TEXTURE_ENV, GL_COMBINE_RGB_EXT, GL_ADD);
+			glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_COMBINE);
+			glTexEnvi(GL_TEXTURE_ENV, GL_COMBINE_RGB, GL_ADD);
 		}else{
 			glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 		}
@@ -268,7 +265,7 @@ void set_material( material* mat ){
 		glBindTexture(GL_TEXTURE_2D,0);
 		glDisable(GL_TEXTURE_2D);
 	}
-	glActiveTextureARB(GL_TEXTURE0_ARB);
+	glActiveTexture(GL_TEXTURE0);
 
 	if(!mat->doublesided) glEnable(GL_CULL_FACE);
 	else glDisable(GL_CULL_FACE);

@@ -1,13 +1,11 @@
-#define WIN32_LEAN_AND_MEAN
-#include <windows.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <math.h>
 
-#include <GL/gl.h>
+#include <glad/gl.h>
 #include <GL/glu.h>
-#include "extensions.h"
+#include <GLFW/glfw3.h>
 
-#include "mumps.h"
 #include "object.h"
 #include "rtt.h"
 #include "blur.h"
@@ -16,7 +14,11 @@
 #include <bass.h>
 
 void error(char *string){
+#ifdef _WIN32
 	MessageBox(NULL,string,NULL,MB_OK);
+#else
+	fprintf(stderr, "*** error: %s\n", string);
+#endif
 	exit(1);
 }
 
@@ -208,7 +210,7 @@ void fullscreen_image_flip(int texture, int mip){
 
 void overlay(int texture, float alpha){
 	glPushAttrib(GL_ALL_ATTRIB_BITS);
-	glBlendEquationEXT(GL_FUNC_REVERSE_SUBTRACT);
+	glBlendEquation(GL_FUNC_REVERSE_SUBTRACT);
 	glBlendFunc( GL_SRC_ALPHA, GL_ONE );
 	glColor4f(1,1,1,alpha);
 	glEnable(GL_BLEND);
@@ -302,7 +304,7 @@ void make_random_particles( vector *particles, int particle_count, float field_s
 	}
 }
 
-__inline set_camera( vector pos, vector look_at){
+static inline void set_camera( vector pos, vector look_at){
 	glLoadIdentity();
 	gluLookAt(
 		pos.x,pos.y,pos.z,
@@ -369,9 +371,18 @@ void draw_dilldallscene(object* room, object *sphere, object *sphere_copy, float
 	glPopAttrib();
 }
 
+#ifdef __GNUC__
+#define UNUSED __attribute__ ((unused))
+#endif
+
+static void tastefjas(GLFWwindow *win, int key, UNUSED int scancode, int action, UNUSED int mods)
+{
+	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+		glfwSetWindowShouldClose(win, GLFW_TRUE);
+}
+
 #define PARTICLE_COUNT 1024
 int main(){
-	MSG message;
 	HSTREAM stream = 0;
 	object *room;
 	object *sphere;
@@ -392,19 +403,31 @@ int main(){
 	vector particles[PARTICLE_COUNT];
 	make_random_particles(particles, PARTICLE_COUNT, 200);
 
-	if(!mumps_open("CARL B!!!!1",WIDTH,HEIGHT,32,32,-1,FULLSCREEN)) error("kunne ikke lage bartevindu");
-	if(!init_extensions()){
-		mumps_close();
+	if (!glfwInit())
+		error("GLFW lukter lol");
+
+	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
+
+	GLFWwindow *win = glfwCreateWindow(WIDTH, HEIGHT, "CARL B!!!!1", NULL, NULL);
+	if (!win)
+		error("kunne ikke lage bartevindu");
+
+	glfwSetKeyCallback(win, tastefjas);
+	glfwMakeContextCurrent(win);
+
+	if (!gladLoadGL(glfwGetProcAddress)) {
+		glfwDestroyWindow(win);
 		error("kunne ikke bruke fet opengl-extension");
 	}
+
 	if (!BASS_Init(-1, 44100, 0, 0, 0)) {
-		mumps_close();
+		glfwDestroyWindow(win);
 		error("kunne ikke åpne fet lyd");
 	}
 	stream = BASS_StreamCreateFile(FALSE, "data/uglespy.ogg", 0, 0, BASS_MP3_SETPOS | BASS_STREAM_PRESCAN | 0);
 	if (!stream) {
 		BASS_Free();
-		mumps_close();
+		glfwDestroyWindow(win);
 		error("kunne ikke åpne fet lyd 2.0");
 	}
 
@@ -412,7 +435,7 @@ int main(){
 	if(loading==-1){
 		BASS_StreamFree(stream);
 		BASS_Free();
-		mumps_close();
+		glfwDestroyWindow(win);
 		error("kunne ikke åpne fett bilde");
 	}
 
@@ -420,14 +443,13 @@ int main(){
 	glClear(GL_DEPTH_BUFFER_BIT|GL_COLOR_BUFFER_BIT);
 	fullscreen_image(loading);
 	glFlush();
-	mumps_update();
-
+	glfwSwapBuffers(win);
 
 	room = load_object("cylinder01.kro");
 	if(!room){
 		BASS_StreamFree(stream);
 		BASS_Free();
-		mumps_close();
+		glfwDestroyWindow(win);
 		error("kunne ikke åpne fett objekt");
 	}
 
@@ -435,7 +457,7 @@ int main(){
 	if(!sphere){
 		BASS_StreamFree(stream);
 		BASS_Free();
-		mumps_close();
+		glfwDestroyWindow(win);
 		error("kunne ikke åpne fett objekt");
 	}
 	sphere_copy = copy_object(sphere);
@@ -444,42 +466,42 @@ int main(){
 	if(bjork_texture==-1){
 		BASS_StreamFree(stream);
 		BASS_Free();
-		mumps_close();
+		glfwDestroyWindow(win);
 		error("kunne ikke åpne fett bilde");
 	}
 	yo_plus = load_texture("yo_plus.jpg", false);
 	if(yo_plus==-1){
 		BASS_StreamFree(stream);
 		BASS_Free();
-		mumps_close();
+		glfwDestroyWindow(win);
 		error("kunne ikke åpne fett bilde");
 	}
 	carlb = load_texture("carlb.jpg", false);
 	if(carlb==-1){
 		BASS_StreamFree(stream);
 		BASS_Free();
-		mumps_close();
+		glfwDestroyWindow(win);
 		error("kunne ikke åpne fett bilde");
 	}
 	veldig_kule = load_texture("veldig_kule.jpg", false);
 	if(veldig_kule==-1){
 		BASS_StreamFree(stream);
 		BASS_Free();
-		mumps_close();
+		glfwDestroyWindow(win);
 		error("kunne ikke åpne fett bilde");
 	}
 	greets = load_texture("greets.jpg", false);
 	if(greets==-1){
 		BASS_StreamFree(stream);
 		BASS_Free();
-		mumps_close();
+		glfwDestroyWindow(win);
 		error("kunne ikke åpne fett bilde");
 	}
 	mothafuckas = load_texture("mothefuckas.jpg", false);
 	if(mothafuckas==-1){
 		BASS_StreamFree(stream);
 		BASS_Free();
-		mumps_close();
+		glfwDestroyWindow(win);
 		error("kunne ikke åpne fett bilde");
 	}
 
@@ -492,11 +514,13 @@ int main(){
 	BASS_Start();
 	BASS_ChannelPlay(stream, FALSE);
 
-	do {
+	while (!glfwWindowShouldClose(win)) {
 		QWORD pos = BASS_ChannelGetPosition(stream, BASS_POS_BYTE);
 		double time = BASS_ChannelBytes2Seconds(stream, pos);
 
-		glViewport(0,0,mumps_width,mumps_height);
+		int width, height;
+		glfwGetFramebufferSize(win, &width, &height);
+		glViewport(0, 0, width, height);
 
 		if(time<25.55f){
 			glClearColor(1,1,1,0);
@@ -545,7 +569,7 @@ int main(){
 				float alpha = (time-17.5);
 
 				glPushAttrib(GL_ALL_ATTRIB_BITS);
-				glBlendEquationEXT(GL_FUNC_REVERSE_SUBTRACT);
+				glBlendEquation(GL_FUNC_REVERSE_SUBTRACT);
 				glBlendFunc( GL_SRC_ALPHA, GL_ONE );
 
 				glColor4f(1,1,1, alpha );
@@ -681,19 +705,20 @@ int main(){
 			}
 		}
 		glFlush();
-		mumps_update();
+		glfwSwapBuffers(win);
+		glfwPollEvents();
 
-		if(time>60+30) PostQuitMessage(0);
+		if(time>60+30)
+			glfwSetWindowShouldClose(win, GLFW_TRUE);
+	}
 
-		while(PeekMessage(&message,NULL,0,0,PM_REMOVE)){
-			TranslateMessage(&message);
-			DispatchMessage(&message);
-		    if(message.message == WM_QUIT) break;
-		}
-	}while(message.message!=WM_QUIT && !GetAsyncKeyState(VK_ESCAPE));
 	BASS_StreamFree(stream);
 	BASS_Free();
-	mumps_close();
+	glfwDestroyWindow(win);
+#ifdef _WIN32
 	MessageBox(NULL,"Frigi minnet ditt sjøl, taper","In your face",MB_OK);
+#else
+	printf("Frigi minnet ditt sjøl, taper\n");
+#endif
 	return 0;
 }

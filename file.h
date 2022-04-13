@@ -13,7 +13,7 @@ extern "C"{
 #define PASSWORD "fuckbergkrystallen"
 
 typedef struct{
-	unsigned int size;
+	unsigned long size;
 	unsigned char *data;
 	unsigned int pos;
 }file;
@@ -23,7 +23,7 @@ int file_close( file *file );
 
 int file_tell( file *file );
 size_t file_read( void *buffer, size_t size, size_t number, file *file );
-int file_seek( file *file, __int64 offset, int mode );
+int file_seek( file *file, long offset, int mode );
 
 #ifdef __cplusplus
 }
