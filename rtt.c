@@ -38,6 +38,7 @@ rtt_target *init_rtt(int width, int height, float aspect, BOOL wrap, BOOL mipmap
 }
 
 void start_rtt(rtt_target *target){
+	glPushAttrib(GL_VIEWPORT_BIT);
 	glViewport(0, 0, target->width, target->height);
 }
 
@@ -45,5 +46,5 @@ void end_rtt(rtt_target *target){
 	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, target->texture);
 	glCopyTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, 0, 0, target->width, target->height);
-	glViewport(0, 0, 640, 480);
+	glPopAttrib();
 }
