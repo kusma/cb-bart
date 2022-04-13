@@ -83,7 +83,7 @@ int mumps_open(char *title, int width_, int height_, int bpp, int zbuffer, int v
 	mumps_win = CreateWindowEx(0, "mumps", title, style, 0, 0, rect.right-rect.left, rect.bottom-rect.top, 0, 0, mumps_instance, 0);
 	if(!mumps_win) return FALSE;
 
-	/* sett fullscreen med en gang, liksågodt */
+	/* sett fullscreen med en gang, liksÃ¥godt */
 	if(fullscreen && ChangeDisplaySettings(&devmode,CDS_FULLSCREEN)!=DISP_CHANGE_SUCCESSFUL) return FALSE;
 
 	/* og fjern muspekern i fullscreen */

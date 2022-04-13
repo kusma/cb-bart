@@ -399,13 +399,13 @@ int main(){
 	}
 	if (!BASS_Init(-1, 44100, 0, 0, 0)) {
 		mumps_close();
-		error("kunne ikke åpne fet lyd");
+		error("kunne ikke Ã¥pne fet lyd");
 	}
 	stream = BASS_StreamCreateFile(FALSE, "data/uglespy.ogg", 0, 0, BASS_MP3_SETPOS | BASS_STREAM_PRESCAN | 0);
 	if (!stream) {
 		BASS_Free();
 		mumps_close();
-		error("kunne ikke åpne fet lyd 2.0");
+		error("kunne ikke Ã¥pne fet lyd 2.0");
 	}
 
 	loading = load_texture("loading.jpg", FALSE);
@@ -413,7 +413,7 @@ int main(){
 		BASS_StreamFree(stream);
 		BASS_Free();
 		mumps_close();
-		error("kunne ikke åpne fett bilde");
+		error("kunne ikke Ã¥pne fett bilde");
 	}
 
 	glClearColor(0,0,0,0);
@@ -428,7 +428,7 @@ int main(){
 		BASS_StreamFree(stream);
 		BASS_Free();
 		mumps_close();
-		error("kunne ikke åpne fett objekt");
+		error("kunne ikke Ã¥pne fett objekt");
 	}
 
 	sphere = load_object("sphere01.kro");
@@ -436,7 +436,7 @@ int main(){
 		BASS_StreamFree(stream);
 		BASS_Free();
 		mumps_close();
-		error("kunne ikke åpne fett objekt");
+		error("kunne ikke Ã¥pne fett objekt");
 	}
 	sphere_copy = copy_object(sphere);
 
@@ -445,42 +445,42 @@ int main(){
 		BASS_StreamFree(stream);
 		BASS_Free();
 		mumps_close();
-		error("kunne ikke åpne fett bilde");
+		error("kunne ikke Ã¥pne fett bilde");
 	}
 	yo_plus = load_texture("yo_plus.jpg", FALSE);
 	if(yo_plus==-1){
 		BASS_StreamFree(stream);
 		BASS_Free();
 		mumps_close();
-		error("kunne ikke åpne fett bilde");
+		error("kunne ikke Ã¥pne fett bilde");
 	}
 	carlb = load_texture("carlb.jpg", FALSE);
 	if(carlb==-1){
 		BASS_StreamFree(stream);
 		BASS_Free();
 		mumps_close();
-		error("kunne ikke åpne fett bilde");
+		error("kunne ikke Ã¥pne fett bilde");
 	}
 	veldig_kule = load_texture("veldig_kule.jpg", FALSE);
 	if(veldig_kule==-1){
 		BASS_StreamFree(stream);
 		BASS_Free();
 		mumps_close();
-		error("kunne ikke åpne fett bilde");
+		error("kunne ikke Ã¥pne fett bilde");
 	}
 	greets = load_texture("greets.jpg", FALSE);
 	if(greets==-1){
 		BASS_StreamFree(stream);
 		BASS_Free();
 		mumps_close();
-		error("kunne ikke åpne fett bilde");
+		error("kunne ikke Ã¥pne fett bilde");
 	}
 	mothafuckas = load_texture("mothefuckas.jpg", FALSE);
 	if(mothafuckas==-1){
 		BASS_StreamFree(stream);
 		BASS_Free();
 		mumps_close();
-		error("kunne ikke åpne fett bilde");
+		error("kunne ikke Ã¥pne fett bilde");
 	}
 
 	rendertarget = init_rtt(512,256,(float)WIDTH/(float)HEIGHT, FALSE, FALSE);
@@ -695,6 +695,6 @@ int main(){
 	BASS_StreamFree(stream);
 	BASS_Free();
 	mumps_close();
-	MessageBox(NULL,"Frigi minnet ditt sjøl, taper","In your face",MB_OK);
+	MessageBox(NULL,"Frigi minnet ditt sjÃ¸l, taper","In your face",MB_OK);
 	return 0;
 }
