@@ -1,5 +1,5 @@
-#ifndef __MATRIX_H__
-#define __MATRIX_H__
+#ifndef MATRIX_H
+#define MATRIX_H
 
 #ifdef __cplusplus
 extern "C"{
@@ -27,4 +27,4 @@ vector matrix_inverserotatevector( matrix m, vector v );
 }
 #endif 
 
-#endif /* __MATRIX_H__ */
+#endif /* MATRIX_H */

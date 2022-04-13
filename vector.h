@@ -1,5 +1,5 @@
-#ifndef __VECTOR_H__
-#define __VECTOR_H__
+#ifndef VECTOR_H
+#define VECTOR_H
 
 #include <math.h>
 
@@ -65,4 +65,4 @@ __inline vector vector_crossproduct( const vector v1, const vector v2 ){
 	return temp;
 }
 
-#endif /* __VECTOR_H__ */
+#endif /* VECTOR_H */
