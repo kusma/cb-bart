@@ -18,7 +18,6 @@ void init_blur(int width, int height){
 
 int blur(float rotation, float distance, float alpha, BOOL additive, int texture){
 	int inner, outer;
-	float inv_aspect = 3.f/4.f;
 
 	float vertices[] = {
 		-1.f, -1.f,
