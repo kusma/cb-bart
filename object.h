@@ -26,8 +26,8 @@ typedef struct{
 	float specular_level;
 	float shininess;
 
-	unsigned int texturemap;
-	unsigned int environmentmap;
+	int texturemap;
+	int environmentmap;
 }material;
 
 
