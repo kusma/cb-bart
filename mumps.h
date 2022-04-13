@@ -5,11 +5,6 @@
 extern "C"{
 #endif
 
-extern HINSTANCE mumps_instance;
-extern BOOL mumps_fullscreen;
-extern HWND mumps_win;
-extern HDC mumps_hdc;
-extern HGLRC mumps_hrc;
 extern int mumps_width;
 extern int mumps_height;
 
