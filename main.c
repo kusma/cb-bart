@@ -302,7 +302,7 @@ void make_random_particles( vector *particles, int particle_count, float field_s
 	}
 }
 
-__inline set_camera( vector pos, vector look_at, float roll){
+__inline set_camera( vector pos, vector look_at){
 	glLoadIdentity();
 	gluLookAt(
 		pos.x,pos.y,pos.z,
@@ -524,8 +524,7 @@ int main(){
 				),
 				vector_make( // look_at
 					0, 0, 0
-				),
-				0
+				)
 			);
 
 			draw_particles(particles,PARTICLE_COUNT,yo_plus, (float)15);
