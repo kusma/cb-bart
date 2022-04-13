@@ -11,9 +11,9 @@ rtt_target *init_rtt(int width, int height, float aspect, BOOL wrap, BOOL mipmap
 	rtt_target *target = (rtt_target*)malloc(sizeof(rtt_target));
 	unsigned int *data = (unsigned int*)malloc(sizeof(unsigned int)*width*height);
 
-    glGenTextures(1, (GLuint*)&target->texture);
+	glGenTextures(1, (GLuint*)&target->texture);
 	memset( data, 0, sizeof(unsigned int)*width*height );
-    glBindTexture(GL_TEXTURE_2D, target->texture);
+	glBindTexture(GL_TEXTURE_2D, target->texture);
 
 	glTexImage2D( GL_TEXTURE_2D, 0, 4, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
 
