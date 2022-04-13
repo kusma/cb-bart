@@ -26,9 +26,9 @@ void error(char *string){
 #define ASPECT (((float)WIDTH)/((float)HEIGHT))
 
 #ifdef _DEBUG
-#define FULLSCREEN FALSE
+#define FULLSCREEN false
 #else
-#define FULLSCREEN TRUE
+#define FULLSCREEN true
 #endif
 
 float black_color[4] = {0,0,0,0};
@@ -216,7 +216,7 @@ void overlay(int texture, float alpha){
 	glPopAttrib();
 }
 
-void set_light( unsigned int light, float x, float y, float z, BOOL on ){
+void set_light( unsigned int light, float x, float y, float z, bool on ){
 	GLfloat temp[4] = {x,y,z,1};
 	glLightfv(GL_LIGHT0+light,GL_POSITION,temp);
 
@@ -288,7 +288,7 @@ void blob_distort( object *source, object *destination, vector wobble, vector di
 		src++;
 		dst++;
 	}
-	destination->recalculate_normals = TRUE;
+	destination->recalculate_normals = true;
 }
 
 void make_random_particles( vector *particles, int particle_count, float field_scale){
@@ -337,7 +337,7 @@ void draw_dilldallscene(object* room, object *sphere, object *sphere_copy, float
 		0,1,0
 		);
 
-	set_light(0, (float)sin(time*5)*50,0,(float)cos(time*5)*50,TRUE);
+	set_light(0, (float)sin(time*5)*50,0,(float)cos(time*5)*50, true);
 
 	glEnable(GL_LIGHTING);
 	glEnable(GL_DEPTH_TEST);
@@ -408,7 +408,7 @@ int main(){
 		error("kunne ikke åpne fet lyd 2.0");
 	}
 
-	loading = load_texture("loading.jpg", FALSE);
+	loading = load_texture("loading.jpg", false);
 	if(loading==-1){
 		BASS_StreamFree(stream);
 		BASS_Free();
@@ -440,42 +440,42 @@ int main(){
 	}
 	sphere_copy = copy_object(sphere);
 
-	bjork_texture = load_texture("bjork.jpg", FALSE);
+	bjork_texture = load_texture("bjork.jpg", false);
 	if(bjork_texture==-1){
 		BASS_StreamFree(stream);
 		BASS_Free();
 		mumps_close();
 		error("kunne ikke åpne fett bilde");
 	}
-	yo_plus = load_texture("yo_plus.jpg", FALSE);
+	yo_plus = load_texture("yo_plus.jpg", false);
 	if(yo_plus==-1){
 		BASS_StreamFree(stream);
 		BASS_Free();
 		mumps_close();
 		error("kunne ikke åpne fett bilde");
 	}
-	carlb = load_texture("carlb.jpg", FALSE);
+	carlb = load_texture("carlb.jpg", false);
 	if(carlb==-1){
 		BASS_StreamFree(stream);
 		BASS_Free();
 		mumps_close();
 		error("kunne ikke åpne fett bilde");
 	}
-	veldig_kule = load_texture("veldig_kule.jpg", FALSE);
+	veldig_kule = load_texture("veldig_kule.jpg", false);
 	if(veldig_kule==-1){
 		BASS_StreamFree(stream);
 		BASS_Free();
 		mumps_close();
 		error("kunne ikke åpne fett bilde");
 	}
-	greets = load_texture("greets.jpg", FALSE);
+	greets = load_texture("greets.jpg", false);
 	if(greets==-1){
 		BASS_StreamFree(stream);
 		BASS_Free();
 		mumps_close();
 		error("kunne ikke åpne fett bilde");
 	}
-	mothafuckas = load_texture("mothefuckas.jpg", FALSE);
+	mothafuckas = load_texture("mothefuckas.jpg", false);
 	if(mothafuckas==-1){
 		BASS_StreamFree(stream);
 		BASS_Free();
@@ -483,8 +483,8 @@ int main(){
 		error("kunne ikke åpne fett bilde");
 	}
 
-	rendertarget = init_rtt(512,256,(float)WIDTH/(float)HEIGHT, FALSE, FALSE);
-	fucking_shit = init_rtt(512,256,(float)WIDTH/(float)HEIGHT, FALSE, TRUE);
+	rendertarget = init_rtt(512,256,(float)WIDTH/(float)HEIGHT, false, false);
+	fucking_shit = init_rtt(512,256,(float)WIDTH/(float)HEIGHT, false, true);
 	init_blur(256,256);
 
 	glEnable(GL_NORMALIZE);
@@ -577,8 +577,8 @@ int main(){
 
 			start_rtt(rendertarget);
 
-			set_light(0, (float)sin(time)*50,0,(float)cos(time)*50,TRUE);
-			set_light(1, (float)sin(time+1)*50,0,(float)cos(time+1)*50,TRUE);
+			set_light(0, (float)sin(time)*50,0,(float)cos(time)*50,true);
+			set_light(1, (float)sin(time+1)*50,0,(float)cos(time+1)*50,true);
 
 			glEnable(GL_LIGHTING);
 			glEnable(GL_DEPTH_TEST);
@@ -609,7 +609,7 @@ int main(){
 
 			end_rtt(rendertarget);
 
-			i = blur((float)sin(time*0.3f)*0.3f, 0.1f+(1+(float)sin(time*0.1f))*0.2f, 0.2f, FALSE, rendertarget->texture);
+			i = blur((float)sin(time*0.3f)*0.3f, 0.1f+(1+(float)sin(time*0.1f))*0.2f, 0.2f, false, rendertarget->texture);
 
 			fullscreen_image(i);
 

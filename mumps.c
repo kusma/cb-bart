@@ -66,7 +66,7 @@ int mumps_open(char *title, int width_, int height_, int bpp, int zbuffer, int v
 	/* vinduklasse-stash */
 	wc.hInstance = mumps_instance = GetModuleHandle(NULL);
 	wc.hCursor = LoadCursor(NULL,IDC_ARROW);
-	if(!RegisterClass(&wc)) return FALSE;
+	if(!RegisterClass(&wc)) return false;
 
 	/* rektangel-fjas */
 	rect.left = 0;
@@ -81,10 +81,10 @@ int mumps_open(char *title, int width_, int height_, int bpp, int zbuffer, int v
 		style = WS_POPUP|WS_VISIBLE;
 	}
 	mumps_win = CreateWindowEx(0, "mumps", title, style, 0, 0, rect.right-rect.left, rect.bottom-rect.top, 0, 0, mumps_instance, 0);
-	if(!mumps_win) return FALSE;
+	if(!mumps_win) return false;
 
 	/* sett fullscreen med en gang, liksågodt */
-	if(fullscreen && ChangeDisplaySettings(&devmode,CDS_FULLSCREEN)!=DISP_CHANGE_SUCCESSFUL) return FALSE;
+	if(fullscreen && ChangeDisplaySettings(&devmode,CDS_FULLSCREEN)!=DISP_CHANGE_SUCCESSFUL) return false;
 
 	/* og fjern muspekern i fullscreen */
 	if(fullscreen)ShowCursor(FALSE);
@@ -95,16 +95,16 @@ int mumps_open(char *title, int width_, int height_, int bpp, int zbuffer, int v
 	pfd.cColorBits = bpp;
 	pfd.cDepthBits = zbuffer;
 	pixelformat = ChoosePixelFormat(mumps_hdc, &pfd);
-	if(!pixelformat) return FALSE;
+	if(!pixelformat) return false;
 	SetPixelFormat(mumps_hdc, pixelformat, &pfd);
 
 	/* lag opengl her ;) */
 	mumps_hrc = wglCreateContext(mumps_hdc);
-	if(!mumps_hrc) return FALSE;
+	if(!mumps_hrc) return false;
 	wglMakeCurrent(mumps_hdc,mumps_hrc);
 
 	/* alt gikk fint */
-	return TRUE;
+	return true;
 }
 
 void mumps_update(){

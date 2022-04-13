@@ -30,7 +30,7 @@ char *loadstring(file* file){
 }
 
 
-int load_texture(char *filename, BOOL wrap){
+int load_texture(char *filename, bool wrap){
 	unsigned int id;
 	unsigned int* pixels;
 	int width;
@@ -81,10 +81,10 @@ material *load_material(char * filename){
 		return NULL;
 	}
 
-	temp->doublesided = FALSE;
-	temp->shaded = TRUE;
-	temp->smoothshaded = TRUE;
-	temp->wireframe = FALSE;
+	temp->doublesided = false;
+	temp->shaded = true;
+	temp->smoothshaded = true;
+	temp->wireframe = false;
 
 	temp->alpha = 1.f;
 
@@ -96,11 +96,11 @@ material *load_material(char * filename){
 	file_read(&temp->shininess,1,sizeof(float),fp);
 
 	texture_filename = loadstring(fp);
-	temp->texturemap = load_texture(texture_filename,TRUE);
+	temp->texturemap = load_texture(texture_filename,true);
 	free(texture_filename);
 
 	texture_filename = loadstring(fp);
-	temp->environmentmap = load_texture(texture_filename,TRUE);
+	temp->environmentmap = load_texture(texture_filename,true);
 	free(texture_filename);
 
 	file_close(fp);
@@ -139,7 +139,7 @@ void generate_normals(object *obj){
 		normal++;
 	}
 
-	obj->recalculate_normals = FALSE;
+	obj->recalculate_normals = false;
 }
 
 object *load_object( char *filename ){

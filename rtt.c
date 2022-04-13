@@ -7,7 +7,7 @@
 #include "extensions.h"
 #include "rtt.h"
 
-rtt_target *init_rtt(int width, int height, float aspect, BOOL wrap, BOOL mipmap){
+rtt_target *init_rtt(int width, int height, float aspect, bool wrap, bool mipmap){
 	rtt_target *target = (rtt_target*)malloc(sizeof(rtt_target));
 
 	glGenTextures(1, (GLuint*)&target->texture);

@@ -17,38 +17,38 @@ PFNWGLRELEASEPBUFFERDCARBPROC wglReleasePbufferDCARB = NULL;
 PFNWGLDESTROYPBUFFERARBPROC wglDestroyPbufferARB = NULL;
 PFNWGLBINDTEXIMAGEARBPROC wglBindTexImageARB = NULL;
 PFNWGLRELEASETEXIMAGEARBPROC wglReleaseTexImageARB = NULL;
-
+#endif
 
 PFNGLBLENDEQUATIONEXTPROC glBlendEquationEXT = NULL;
 
-BOOL init_extensions(){
+bool init_extensions(){
 
 	glActiveTextureARB = (PFNGLACTIVETEXTUREARBPROC)wglGetProcAddress("glActiveTextureARB");
-	if(!glActiveTextureARB) return FALSE;
+	if(!glActiveTextureARB) return false;
 
 	glMultiTexCoord2fv = (PFNGLMULTITEXCOORD2FVPROC)wglGetProcAddress("glMultiTexCoord2fv");
-	if(!glMultiTexCoord2fv) return FALSE;
+	if(!glMultiTexCoord2fv) return false;
 
 	wglChoosePixelFormatARB = (PFNWGLCHOOSEPIXELFORMATARBPROC)wglGetProcAddress("wglChoosePixelFormatARB");
-	if(!wglChoosePixelFormatARB) return FALSE;
+	if(!wglChoosePixelFormatARB) return false;
 	wglCreatePbufferARB = (PFNWGLCREATEPBUFFERARBPROC)wglGetProcAddress("wglCreatePbufferARB");
-	if(!wglCreatePbufferARB) return FALSE;
+	if(!wglCreatePbufferARB) return false;
 	wglGetPbufferDCARB = (PFNWGLGETPBUFFERDCARBPROC)wglGetProcAddress("wglGetPbufferDCARB");
-	if(!wglGetPbufferDCARB) return FALSE;
+	if(!wglGetPbufferDCARB) return false;
 	wglQueryPbufferARB = (PFNWGLQUERYPBUFFERARBPROC)wglGetProcAddress("wglQueryPbufferARB");
-	if(!wglQueryPbufferARB) return FALSE;
+	if(!wglQueryPbufferARB) return false;
 	wglReleasePbufferDCARB = (PFNWGLRELEASEPBUFFERDCARBPROC)wglGetProcAddress("wglReleasePbufferDCARB");
-	if(!wglReleasePbufferDCARB) return FALSE;
+	if(!wglReleasePbufferDCARB) return false;
 	wglDestroyPbufferARB = (PFNWGLDESTROYPBUFFERARBPROC)wglGetProcAddress("wglDestroyPbufferARB");
-	if(!wglDestroyPbufferARB) return FALSE;
+	if(!wglDestroyPbufferARB) return false;
 	wglBindTexImageARB = (PFNWGLBINDTEXIMAGEARBPROC)wglGetProcAddress("wglBindTexImageARB");
-	if(!wglBindTexImageARB) return FALSE;
+	if(!wglBindTexImageARB) return false;
 
 	wglReleaseTexImageARB = (PFNWGLRELEASETEXIMAGEARBPROC)wglGetProcAddress("wglReleaseTexImageARB");
-	if(!wglReleaseTexImageARB) return FALSE;
+	if(!wglReleaseTexImageARB) return false;
 
 	glBlendEquationEXT = (PFNGLBLENDEQUATIONEXTPROC)wglGetProcAddress("glBlendEquationEXT");
-	if(!glBlendEquationEXT) return FALSE;
+	if(!glBlendEquationEXT) return false;
 
-	return TRUE;
+	return true;
 }

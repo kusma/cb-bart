@@ -4,6 +4,8 @@
 extern "C"{
 #endif
 
+#include <stdbool.h>
+
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #include <GL/gl.h>
@@ -11,7 +13,7 @@ extern "C"{
 #include <GL/glext.h>
 #include <GL/wglext.h>
 
-BOOL init_extensions();
+bool init_extensions();
 
 PFNGLACTIVETEXTUREARBPROC glActiveTextureARB;
 PFNGLMULTITEXCOORD2FVPROC glMultiTexCoord2fv;

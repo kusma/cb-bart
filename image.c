@@ -15,7 +15,7 @@
 
 #include "file.h"
 
-BOOL image_load( char *filename, unsigned int **pixels, unsigned int *w, unsigned int *h ){
+bool image_load( char *filename, unsigned int **pixels, unsigned int *w, unsigned int *h ){
 	BITMAPINFO bi;
 	HGLOBAL global;
 	void* temp_data;
@@ -31,7 +31,7 @@ BOOL image_load( char *filename, unsigned int **pixels, unsigned int *w, unsigne
 
 	file* file = file_open(filename);
 	if(file==NULL){
-		return FALSE;
+		return false;
 	}
 
 	if(w)*w = 0;
@@ -44,7 +44,7 @@ BOOL image_load( char *filename, unsigned int **pixels, unsigned int *w, unsigne
 	GlobalUnlock( global );
 	stream = NULL;
 	hr = CreateStreamOnHGlobal( global, TRUE, &stream );
-	if(FAILED(hr)) return FALSE;
+	if(FAILED(hr)) return false;
 
 	OleLoadPicture(
 		stream,
@@ -87,5 +87,5 @@ BOOL image_load( char *filename, unsigned int **pixels, unsigned int *w, unsigne
 	if(w) *w = width_;
 	if(h) *h = height_;
 	*pixels = image_data;
-	return TRUE;
+	return true;
 }

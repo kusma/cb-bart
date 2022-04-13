@@ -13,10 +13,10 @@
 rtt_target *blur_target;
 
 void init_blur(int width, int height){
-	blur_target = init_rtt(width,height,4.f/3.f,FALSE,FALSE);
+	blur_target = init_rtt(width,height,4.f/3.f,false,false);
 }
 
-int blur(float rotation, float distance, float alpha, BOOL additive, int texture){
+int blur(float rotation, float distance, float alpha, bool additive, int texture){
 	int inner, outer;
 
 	float vertices[] = {

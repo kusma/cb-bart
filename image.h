@@ -12,10 +12,9 @@
 extern "C"{
 #endif
 
-#define WIN32_LEAN_AND_MEAN
-#include <windows.h>
+#include <stdbool.h>
 
-BOOL image_load( char *filename, unsigned int **pixels, unsigned int *w, unsigned int *h );
+bool image_load( char *filename, unsigned int **pixels, unsigned int *w, unsigned int *h );
 
 #ifdef __cplusplus
 }

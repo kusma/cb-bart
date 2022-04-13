@@ -1,8 +1,7 @@
 #ifndef OBJECT_H
 #define OBJECT_H
 
-#define WIN32_LEAN_AND_MEAN
-#include <windows.h>
+#include <stdbool.h>
 #include "vector.h"
 
 typedef struct{
@@ -17,10 +16,10 @@ typedef struct{
 	unsigned int id;
 	char *name;
 
-	BOOL doublesided;
-	BOOL shaded;
-	BOOL smoothshaded;
-	BOOL wireframe;
+	bool doublesided;
+	bool shaded;
+	bool smoothshaded;
+	bool wireframe;
 
 	float alpha;
 	color ambient;
@@ -41,7 +40,7 @@ typedef struct{
 }submesh;
 
 typedef struct{
-	BOOL recalculate_normals;
+	bool recalculate_normals;
 
 	unsigned int vertex_count;
 	vector *vertices;
@@ -57,6 +56,6 @@ object *load_object( char *filename );
 object *copy_object( object *source );
 
 void draw_object( object *obj );
-int load_texture(char *filename, BOOL wrap);
+int load_texture(char *filename, bool wrap);
 
 #endif
