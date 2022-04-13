@@ -1,3 +1,6 @@
+#ifndef FILE_H
+#define FILE_H
+
 #ifdef __cplusplus
 extern "C"{
 #endif
@@ -24,4 +27,6 @@ int file_seek( file *file, __int64 offset, int mode );
 
 #ifdef __cplusplus
 }
+#endif
+
 #endif

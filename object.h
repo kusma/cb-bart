@@ -1,3 +1,6 @@
+#ifndef OBJECT_H
+#define OBJECT_H
+
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #include "vector.h"
@@ -55,3 +58,5 @@ object *copy_object( object *source );
 
 void draw_object( object *obj );
 int load_texture(char *filename, BOOL wrap);
+
+#endif
