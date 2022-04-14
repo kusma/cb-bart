@@ -232,6 +232,7 @@ void set_material( material* mat ){
 	if(mat==NULL) return;
 
 	alpha = mat->alpha;
+	glColor3f(1,1,1);
 	set_param(GL_AMBIENT,mat->ambient,alpha);
 	set_param(GL_DIFFUSE,mat->diffuse,alpha);
 	set_param(GL_SPECULAR,mat->specular,mat->specular_level);
