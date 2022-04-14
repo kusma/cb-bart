@@ -635,7 +635,7 @@ int main(){
 
 			end_rtt(rendertarget);
 
-			i = blur((float)sin(time*0.3f)*0.3f, 0.1f+(1+(float)sin(time*0.1f))*0.2f, 0.2f, false, rendertarget->texture);
+			i = blur((float)sin(time*0.3f)*0.3f, 0.1f+(1+(float)sin(time*0.1f))*0.2f, 0.5f, false, rendertarget->texture);
 
 			fullscreen_image(i);
 
