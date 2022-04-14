@@ -27,7 +27,7 @@ void error(char *string){
 
 #define ASPECT (((float)WIDTH)/((float)HEIGHT))
 
-#ifdef _DEBUG
+#ifndef NDEBUG
 #define FULLSCREEN false
 #else
 #define FULLSCREEN true
