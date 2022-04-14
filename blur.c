@@ -10,7 +10,7 @@
 rtt_target *blur_target;
 
 void init_blur(int width, int height){
-	blur_target = init_rtt(width,height,4.f/3.f,false,false);
+	blur_target = init_rtt(width,height,false,false);
 }
 
 int blur(float rotation, float distance, float alpha, bool additive, int texture){

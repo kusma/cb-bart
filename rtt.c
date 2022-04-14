@@ -5,7 +5,7 @@
 #include <GL/glu.h>
 #include "rtt.h"
 
-rtt_target *init_rtt(int width, int height, float aspect, bool wrap, bool mipmap){
+rtt_target *init_rtt(int width, int height, bool wrap, bool mipmap){
 	rtt_target *target = (rtt_target*)malloc(sizeof(rtt_target));
 
 	glGenTextures(1, (GLuint*)&target->texture);
@@ -31,7 +31,6 @@ rtt_target *init_rtt(int width, int height, float aspect, bool wrap, bool mipmap
 	}
 	target->width = width;
 	target->height = height;
-	target->aspect = aspect;
 	return target;
 }
 
