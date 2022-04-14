@@ -516,7 +516,12 @@ int main(){
 	init_blur(width / 2, height / 2);
 
 	glEnable(GL_NORMALIZE);
-	
+
+#if 0
+	QWORD pos = BASS_ChannelSeconds2Bytes(stream, 30.0f);
+	BASS_ChannelSetPosition(stream, pos, BASS_POS_BYTE);
+#endif
+
 	BASS_Start();
 	BASS_ChannelPlay(stream, FALSE);
 
